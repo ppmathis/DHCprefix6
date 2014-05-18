@@ -1,0 +1,39 @@
+# Specifies after how many seconds an action will be marked as timeout and retried
+# For example, if no answer comes to a SOLICIT message within [X] seconds, retry
+retry_time: 60
+
+# DHCPv6 specifies two timeouts per prefix - T1 (renew) and T2 (rebind). DHCprefix6 adds another
+# timeout called expire, which specifies after how many seconds the interface should be completely
+# reset. For example, the following actions might happen:
+# > after [T1] secs, try to rebind every [retry_time] secs
+# > after [T2] secs, try to renew every [retry_time] secs
+# > after [expire] secs, give up and start again from state INITIAL
+# The expire timeout gets calculated by multiplying T2 with the multiplier specified here.
+expire_time_multi: 1.5
+
+# Array of all physical interfaces
+# > name: The physical name of the interface, like eth[X]
+# > mac: The mac address of the physical interface, if not specified, it will be autodetected
+# > ip: The link-local address of the physical interface, if not specified, it will be autodetected (on UNIX only)
+interfaces:
+    -   name: 'eth0'
+
+    -   name: 'eth1'
+        mac: '00:01:02:03:04:05'
+        ip: 'fe80::2cb9:1d42:5080:c5d3'
+
+# Array of all prefixes
+# > interface: Name of the physical interface, must be defined above
+# > duid: Valid DUID-LL or DUID-LLT string which will be used to announce the prefix
+# > address: IPv6 prefix address
+# > length: IPv6 prefix length
+prefixes:
+    -   interface: 'eth11'
+        duid: '00:03:00:01:00:00:00:00:00:00'
+        address: '2001:babe::'
+        length: 64
+
+    -   interface: 'eth11'
+        duid: '00:03:00:01:99:99:99:99:99:99'
+        address: '2001:c0de::'
+        length: 56

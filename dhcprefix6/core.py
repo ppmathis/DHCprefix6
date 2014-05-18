@@ -184,7 +184,7 @@ class App(object):
 		self._logger.info("| Version: %d.%d.%d                             |" % self.VERSION)
 		self._logger.info('=~=~=~=~=~=~=~=~=~=~=~=~=~=~~=~=~=~=~=~=~=~=~=')
 
-	def _signal_handler(self):
+	def _signal_handler(self, signal=None, frame=None):
 		print()
 		self._logger.warning('Application aborted. Stopping all threads...')
 		self._logger.debug("> Thread count: %d thread(s)" % len(self._thread_pool))
